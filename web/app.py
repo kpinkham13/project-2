@@ -21,15 +21,12 @@ def parse_config(config_paths):
 
 config = parse_config(["credentials.ini", "default.ini"])
 
-
-@app.route("/<url>")
-def triviahtml(url):
-    if '..' in url or '~' in url:
+@app.route("/<name>")
+def hello(name):
+    if '..' in name or '~' in name:
         abort(403)
-    elif url.endswith("trivia.html"):
-        return send_from_directory('pages/', 'trivia.html')
-    elif url.endswith("trivia.css"):
-        return send_from_directory('pages/', 'trivia.css')
+    elif os.path.isfile(name):
+        return send_from_directory('pages/', name)
     else:
         abort(404)
 
