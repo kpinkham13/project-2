@@ -23,9 +23,10 @@ config = parse_config(["credentials.ini", "default.ini"])
 
 @app.route("/<name>")
 def hello(name):
+    path = './pages/' + name
     if '..' in name or '~' in name:
         abort(403)
-    elif os.path.isfile(name):
+    elif os.path.isfile(path):
         return send_from_directory('pages/', name)
     else:
         abort(404)
